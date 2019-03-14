@@ -17,33 +17,30 @@
 <body style='margin : 0px; overflow: hidden; font-family: Monospace;'>
 
 <video id="video" autoplay loop crossOrigin="anonymous" webkit-playsinline style="display:none">
-	<source src="video/ct.ogv" type='video/ogg; codecs="theora, vorbis"'>
-	<source src="video/ct.MP4" type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'>
+	<source src="video/sintel.ogv" type='video/ogg; codecs="theora, vorbis"'>
+	<source src="video/sintel.mp4" type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'>
 </video>
 		
+<!-- 
+  Example created by Lee Stemkoski: https://github.com/stemkoski
+  Based on the AR.js library and examples created by Jerome Etienne: https://github.com/jeromeetienne/AR.js/
+-->
+
 <script>
-
 var scene, camera, renderer, clock, deltaTime, totalTime;
-
 var arToolkitSource, arToolkitContext;
-
 var markerRoot1;
-
 var mesh1;
-
 initialize();
 animate();
-
 function initialize()
 {
 	scene = new THREE.Scene();
-
 	let ambientLight = new THREE.AmbientLight( 0xcccccc, 0.5 );
 	scene.add( ambientLight );
 				
 	camera = new THREE.Camera();
 	scene.add(camera);
-
 	renderer = new THREE.WebGLRenderer({
 		antialias : true,
 		alpha: true
@@ -54,7 +51,6 @@ function initialize()
 	renderer.domElement.style.top = '0px'
 	renderer.domElement.style.left = '0px'
 	document.body.appendChild( renderer.domElement );
-
 	clock = new THREE.Clock();
 	deltaTime = 0;
 	totalTime = 0;
@@ -62,11 +58,9 @@ function initialize()
 	////////////////////////////////////////////////////////////
 	// setup arToolkitSource
 	////////////////////////////////////////////////////////////
-
 	arToolkitSource = new THREEx.ArToolkitSource({
 		sourceType : 'webcam',
 	});
-
 	function onResize()
 	{
 		arToolkitSource.onResize()	
@@ -76,7 +70,6 @@ function initialize()
 			arToolkitSource.copySizeTo(arToolkitContext.arController.canvas)	
 		}	
 	}
-
 	arToolkitSource.init(function onReady(){
 		onResize()
 	});
@@ -89,7 +82,6 @@ function initialize()
 	////////////////////////////////////////////////////////////
 	// setup arToolkitContext
 	////////////////////////////////////////////////////////////	
-
 	// create atToolkitContext
 	arToolkitContext = new THREEx.ArToolkitContext({
 		cameraParametersUrl: 'data/camera_para.dat',
@@ -100,19 +92,16 @@ function initialize()
 	arToolkitContext.init( function onCompleted(){
 		camera.projectionMatrix.copy( arToolkitContext.getProjectionMatrix() );
 	});
-
 	////////////////////////////////////////////////////////////
 	// setup markerRoots
 	////////////////////////////////////////////////////////////
-
 	// build markerControls
 	markerRoot1 = new THREE.Group();
 	scene.add(markerRoot1);
 	let markerControls1 = new THREEx.ArMarkerControls(arToolkitContext, markerRoot1, {
 		type: 'pattern', patternUrl: "data/hiro.patt",
 	})
-
-	let geometry1 = new THREE.PlaneBufferGeometry(2,2,4,4);
+	let geometry1 = new THREE.PlaneBufferGeometry(2,2, 4,4);
 	let video = document.getElementById( 'video' );
 	let texture = new THREE.VideoTexture( video );
 	texture.minFilter = THREE.LinearFilter;
@@ -125,22 +114,16 @@ function initialize()
 	
 	markerRoot1.add( mesh1 );
 }
-
-
 function update()
 {
 	// update artoolkit on every frame
 	if ( arToolkitSource.ready !== false )
 		arToolkitContext.update( arToolkitSource.domElement );
 }
-
-
 function render()
 {
 	renderer.render( scene, camera );
 }
-
-
 function animate()
 {
 	requestAnimationFrame(animate);
@@ -149,7 +132,6 @@ function animate()
 	update();
 	render();
 }
-
 </script>
 
 </body>
