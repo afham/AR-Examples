@@ -21,11 +21,6 @@
 	<source src="video/ct.MP4" type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'>
 </video>
 		
-<!-- 
-  Example created by Lee Stemkoski: https://github.com/stemkoski
-  Based on the AR.js library and examples created by Jerome Etienne: https://github.com/jeromeetienne/AR.js/
--->
-
 <script>
 
 var scene, camera, renderer, clock, deltaTime, totalTime;
@@ -54,7 +49,7 @@ function initialize()
 		alpha: true
 	});
 	renderer.setClearColor(new THREE.Color('lightgrey'), 0)
-	renderer.setSize( 720, 480 );
+	renderer.setSize( 640, 480 );
 	renderer.domElement.style.position = 'absolute'
 	renderer.domElement.style.top = '0px'
 	renderer.domElement.style.left = '0px'
